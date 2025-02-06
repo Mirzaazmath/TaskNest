@@ -42,7 +42,7 @@ class CircleTransitionPainter extends CustomPainter{
     // The max radius that the circle will grow to.
     final double maxRadius=size.height*200;
     // The Original Circle position and size.
-    Offset circlePosition = Offset(size.width/2, size.height*0.75);
+    Offset circlePosition = Offset(size.width/2, size.height-66);
     // The left side of the circle , which never moves during expansion.
     final double circleLeftBound=circlePosition.dx-baseCircleRadius;
     // Apply exponential reduction to the expansion rate of that circle
@@ -71,7 +71,7 @@ class CircleTransitionPainter extends CustomPainter{
     // The max radius that the circle will grow to.
     final double maxRadius=size.height*200;
     // The Original Circle position and size.
-    Offset circlePosition = Offset(size.width/2, size.height*0.75);
+    Offset circlePosition = Offset(size.width/2, size.height-66);
     // The initial  right side of the circle which will becomes the left side of the circle by the end of the animation
     final double circleStartRightSide=circlePosition.dx-baseCircleRadius;
     // The final right side of the circle
@@ -97,6 +97,7 @@ class CircleTransitionPainter extends CustomPainter{
 
     // Paint the background
     canvas.drawPaint(currentCirclePaint);
+
     //Paint the circle
 
     canvas.drawCircle(currentCircleCenter, currentRadius, backgroundPaint);
