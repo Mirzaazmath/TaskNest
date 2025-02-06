@@ -38,6 +38,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
 
   @override
   Widget build(BuildContext context) {
+    // Calculate the position of the onboarding content.
+    final double maxOffset=MediaQuery.sizeOf(context).width;
+    double offsetPercent=1;
+    if(_transitionPercent<=0.25){
+      offsetPercent=-_transitionPercent/0.25;
+    }else if( _transitionPercent>=0.7){
+      offsetPercent =(1.0-_transitionPercent)/0.3;
+      offsetPercent=Curves.easeInCubic.transform(offsetPercent);
+    }
+    final double contentOffset =offsetPercent*maxOffset;
+    final double  contentScale = 0.6+(0.4*(1.0-offsetPercent.abs()));
     return Scaffold(
         body: CustomPaint(
       painter: CircleTransitionPainter(
@@ -46,32 +57,53 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
         nextCircleColor: Colors.red,
         transitionPercent: _transitionPercent,
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+      child: Stack(
+        fit: StackFit.expand,
         children: [
-          Row(
+          Transform(
+            transform: Matrix4.translationValues(contentOffset, 0, 0)..scale(contentScale,contentScale),
+            alignment: Alignment.center,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Spacer(flex: 20,),
+                CircleAvatar(
+                  radius: 100,),
+                Spacer(flex: 20,),
+                Text("Hello World",style: TextStyle(color: Colors.white,fontSize: 40,fontWeight: FontWeight.bold),),
+                Spacer(flex: 50,),
+
+              ],
+            ),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              IconButton(
-                  onPressed: () {
-                    animationController.forward();
-                  },
-                  icon: const Icon(
-                    Icons.play_arrow,
-                    size: 40,
-                  )),
-              Expanded(
-                  child: Slider(
-                      value: animationController.value,
-                      onChanged: (val) {
-                        setState(() {
-                          animationController.value=val;
-                        });
-                      })),
+              Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        animationController.forward();
+                      },
+                      icon: const Icon(
+                        Icons.play_arrow,
+                        size: 40,
+                      )),
+                  Expanded(
+                      child: Slider(
+                          value: animationController.value,
+                          onChanged: (val) {
+                            setState(() {
+                              animationController.value=val;
+                            });
+                          })),
+                ],
+              ),
+              const SizedBox(
+                height: 100,
+              )
             ],
           ),
-          const SizedBox(
-            height: 100,
-          )
         ],
       ),
     ));
