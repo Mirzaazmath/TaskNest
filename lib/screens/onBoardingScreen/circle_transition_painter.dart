@@ -1,6 +1,9 @@
+import 'dart:math';
 import 'dart:ui' as ui;
 
+import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
@@ -25,7 +28,7 @@ class CircleTransitionPainter extends CustomPainter{
   @override
   void paint(Canvas canvas, Size size) {
     if(transitionPercent<0.5){
-      final double expansionPercent= (0.5-transitionPercent)/0.5;
+      final double expansionPercent= transitionPercent/0.5;
     _paintExpansion(canvas, size, expansionPercent);
     }else{
       final double contractionPercent= (1.0-transitionPercent)/0.5;
@@ -36,14 +39,32 @@ class CircleTransitionPainter extends CustomPainter{
   }
 
   void _paintExpansion(Canvas canvas ,Size size,double expansionPercent){
+    // The max radius that the circle will grow to.
+    final double maxRadius=size.height*200;
+    // The Original Circle position and size.
+    Offset circlePosition = Offset(size.width/2, size.height*0.75);
+    // The left side of the circle , which never moves during expansion.
+    final double circleLeftBound=circlePosition.dx-baseCircleRadius;
+    // Apply exponential reduction to the expansion rate of that circle
+    // expands much much slower
+    final num slowedExpansionPercent = pow(expansionPercent, 8);
+
+    final double currentRadius= (maxRadius * slowedExpansionPercent)+baseCircleRadius;
+
+    final Offset currentCircleCenter = Offset(circleLeftBound+currentRadius, circlePosition.dy,);
+
+
     // Paint the background
     canvas.drawPaint(backgroundPaint);
     //Paint the circle
-    Offset circlePosition = Offset(size.width/2, size.height*0.75);
-    canvas.drawCircle(circlePosition, baseCircleRadius, currentCirclePaint);
+
+    canvas.drawCircle(currentCircleCenter, currentRadius, currentCirclePaint);
 
     // Paint the Icon
-    _paintChevron(canvas,circlePosition,backgroundPaint.color);
+    if(expansionPercent<0.1){
+      _paintChevron(canvas,circlePosition,backgroundPaint.color);
+    }
+
 
   }
   void _paintContraction(Canvas canvas ,Size size,double contractionPercent){
