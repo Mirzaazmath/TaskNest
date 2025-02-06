@@ -31,7 +31,7 @@ class CircleTransitionPainter extends CustomPainter{
       final double expansionPercent= transitionPercent/0.5;
     _paintExpansion(canvas, size, expansionPercent);
     }else{
-      final double contractionPercent= (1.0-transitionPercent)/0.5;
+      final double contractionPercent= (transitionPercent-0.5)/0.5;
       _paintContraction(canvas, size, contractionPercent);
     }
 
@@ -68,6 +68,50 @@ class CircleTransitionPainter extends CustomPainter{
 
   }
   void _paintContraction(Canvas canvas ,Size size,double contractionPercent){
+    // The max radius that the circle will grow to.
+    final double maxRadius=size.height*200;
+    // The Original Circle position and size.
+    Offset circlePosition = Offset(size.width/2, size.height*0.75);
+    // The initial  right side of the circle which will becomes the left side of the circle by the end of the animation
+    final double circleStartRightSide=circlePosition.dx-baseCircleRadius;
+    // The final right side of the circle
+    final double circleEndingRightSide= circlePosition.dx+baseCircleRadius;
+
+    // Apply contraction reduction to the contraction rate of that circle
+    // expands much much slower
+    final double  easedContractionPercent=Curves.easeInOut.transform(contractionPercent);
+    final double inverseContractionPercent=1-contractionPercent;
+    final num slowedInverseContractionPercent = pow(inverseContractionPercent, 8);
+
+    final double currentRadius= (maxRadius * slowedInverseContractionPercent)+baseCircleRadius;
+
+
+
+    // Calculate the current right side of the circle
+    final double circleCurrentRightSide= circleStartRightSide+((circleEndingRightSide-circleStartRightSide)*easedContractionPercent);
+
+    final double circleCurrentCenterX=circleCurrentRightSide-currentRadius;
+
+    final Offset currentCircleCenter = Offset(circleCurrentCenterX, circlePosition.dy,);
+
+
+    // Paint the background
+    canvas.drawPaint(currentCirclePaint);
+    //Paint the circle
+
+    canvas.drawCircle(currentCircleCenter, currentRadius, backgroundPaint);
+
+    // Paint the new Expanding Circle
+    if(easedContractionPercent>0.9){
+      double newCircleExpansionPercent=(easedContractionPercent-0.9)/0.1;
+      double newCircleRadius = baseCircleRadius*newCircleExpansionPercent;
+      canvas.drawCircle(currentCircleCenter, newCircleRadius, nextCirclePaint);
+    }
+
+    // Paint the Icon
+    if(contractionPercent>0.95){
+      _paintChevron(canvas,circlePosition,currentCirclePaint.color);
+    }
 
   }
 
