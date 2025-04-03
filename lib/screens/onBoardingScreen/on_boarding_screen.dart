@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:task_nest/constants/app_colors.dart';
+import 'package:task_nest/utils/show_animation_util.dart';
 import '../../model/onboarding_model.dart';
 import 'circle_transition_painter.dart';
 
@@ -17,6 +18,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
   double _transitionPercent = 0;
   int selectedIndex = 0;
 
+
   @override
   void initState() {
     // TODO: implement initState
@@ -31,7 +33,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
       ..addStatusListener((state) {
         setState(() {
           if (state == AnimationStatus.completed) {
-            print("selectedIndex ==m $selectedIndex");
+
             if (selectedIndex < 1) {
               selectedIndex++;
               animationController.value = 0;
@@ -62,6 +64,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
     }
     final double contentOffset = offsetPercent * maxOffset;
     final double contentScale = 0.5 + (0.4 * (1.0 - offsetPercent.abs()));
+
     return Scaffold(
         body: CustomPaint(
       painter: CircleTransitionPainter(
@@ -108,11 +111,27 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
               alignment: Alignment.bottomCenter,
               child: GestureDetector(
                 onTap: () {
-                  animationController.forward();
+                  if(_transitionPercent > 0.5&&selectedIndex+1==2){
+                   // Todo : Need to Add Navigation
+
+                  }else{
+                    animationController.forward();
+                  }
+
                 },
-                child: const CircleAvatar(
-                  radius: 36,
-                  backgroundColor: Colors.transparent,
+                child:  AnimatedContainer(
+                  height: 72,
+                  width: _transitionPercent > 0.5&&selectedIndex+1==2 ? 250:72,
+                  duration: const Duration(milliseconds: 1800),
+                  curve: Curves.elasticInOut,
+                  decoration: BoxDecoration(
+                   borderRadius: BorderRadius.circular(100),
+                    color:  _transitionPercent > 0.5&&selectedIndex+1==2 ?AppColors.primaryColor :Colors.transparent,
+                  ),
+                  alignment: Alignment.center,
+                  child:_transitionPercent > 0.5&&selectedIndex+1==2 ? ShowUpAnimation(
+                    delay: 1100,
+                      child: Text("Let's Start",style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: AppColors.backgroundColor),)):const SizedBox(),
                 ),
               ),
             )
