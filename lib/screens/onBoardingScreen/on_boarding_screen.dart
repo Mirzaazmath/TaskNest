@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:task_nest/constants/app_colors.dart';
 import 'package:task_nest/utils/show_animation_util.dart';
+import '../../constants/app_strings.dart';
 import '../../model/onboarding_model.dart';
 import 'circle_transition_painter.dart';
 
@@ -21,7 +22,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 1500))
@@ -46,7 +47,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
 
   @override
   void dispose() {
-    // TODO: implement dispose
+
     super.dispose();
     animationController.dispose();
   }
@@ -131,7 +132,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                   alignment: Alignment.center,
                   child:_transitionPercent > 0.5&&selectedIndex+1==2 ? ShowUpAnimation(
                     delay: 1100,
-                      child: Text("Let's Start",style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: AppColors.backgroundColor),)):const SizedBox(),
+                      child: Text(AppStrings.letStart,style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: AppColors.backgroundColor),)):const SizedBox(),
                 ),
               ),
             )
