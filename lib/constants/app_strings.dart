@@ -1,4 +1,6 @@
 class AppStrings {
+  /// Developers Branding
+  static const String developerBranding = "Develop by Mirza Azmathullah baig";
   //// OnBoarding Text /////
   static const String letStart = "Let's Start";
   static const String onboardingText1 =
