@@ -4,13 +4,18 @@ A new Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+# TaskNest 
 
-A few resources to get you started if this is your first Flutter project:
+## Folders
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### constants  -> for constant text and colors 
+ 
+### model      -> for model class
+ 
+### screens    -> for ui and screens
+ 
+### utils      -> for utils 
+ 
+### providers  -> for stateManagement
+ 
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
