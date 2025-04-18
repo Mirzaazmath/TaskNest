@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_nest/constants/app_colors.dart';
 import 'package:task_nest/screens/splash_screen.dart';
 import 'package:task_nest/utils/shared_prefutils.dart';
 
@@ -13,9 +14,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return   MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: AppColors.primaryColor,
+        primaryColorDark: AppColors.primaryColorDark,
+        primaryColorLight: AppColors.primaryColorLight,
+        scaffoldBackgroundColor: AppColors.backgroundColor
+      ),
 
-    return  const MaterialApp(
-      home: SplashScreen(),
+      home: const SplashScreen(),
 
     );
   }

@@ -11,4 +11,7 @@ class AppStrings {
   static const String onboardingImagePlan = "assets/images/planing.png";
   static const String onboardingImageComplete = "assets/images/complete.png";
   static const String onboardingImageSuccess = "assets/images/success.png";
+
+  //// Splash Screen Text /////
+  static const String appName = "TaskNest";
 }
