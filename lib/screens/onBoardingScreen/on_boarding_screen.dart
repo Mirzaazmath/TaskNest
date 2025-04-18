@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_nest/constants/app_colors.dart';
 import 'package:task_nest/utils/show_animation_util.dart';
 import '../../constants/app_strings.dart';
@@ -18,7 +19,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
   late AnimationController animationController;
   double _transitionPercent = 0;
   int selectedIndex = 0;
-
 
   @override
   void initState() {
@@ -111,9 +111,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
             Align(
               alignment: Alignment.bottomCenter,
               child: GestureDetector(
-                onTap: () {
+                onTap: () async{
                   if(_transitionPercent > 0.5&&selectedIndex+1==2){
                    // Todo : Need to Add Navigation
+                    // Obtain shared preferences.
+
 
                   }else{
                     animationController.forward();
@@ -141,4 +143,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
       ),
     ));
   }
+
+
 }
