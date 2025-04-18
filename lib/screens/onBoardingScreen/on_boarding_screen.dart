@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_nest/constants/app_colors.dart';
 import 'package:task_nest/utils/show_animation_util.dart';
 import '../../constants/app_strings.dart';
@@ -22,7 +20,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
 
   @override
   void initState() {
-
     super.initState();
     animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 1500))
@@ -34,7 +31,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
       ..addStatusListener((state) {
         setState(() {
           if (state == AnimationStatus.completed) {
-
             if (selectedIndex < 1) {
               selectedIndex++;
               animationController.value = 0;
@@ -47,7 +43,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
 
   @override
   void dispose() {
-
     super.dispose();
     animationController.dispose();
   }
@@ -111,30 +106,39 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
             Align(
               alignment: Alignment.bottomCenter,
               child: GestureDetector(
-                onTap: () async{
-                  if(_transitionPercent > 0.5&&selectedIndex+1==2){
-                   // Todo : Need to Add Navigation
+                onTap: () async {
+                  if (_transitionPercent > 0.5 && selectedIndex + 1 == 2) {
+                    // Todo : Need to Add Navigation
                     // Obtain shared preferences.
-
-
-                  }else{
+                  } else {
                     animationController.forward();
                   }
-
                 },
-                child:  AnimatedContainer(
+                child: AnimatedContainer(
                   height: 72,
-                  width: _transitionPercent > 0.5&&selectedIndex+1==2 ? 250:72,
+                  width: _transitionPercent > 0.5 && selectedIndex + 1 == 2
+                      ? 250
+                      : 72,
                   duration: const Duration(milliseconds: 1800),
                   curve: Curves.elasticInOut,
                   decoration: BoxDecoration(
-                   borderRadius: BorderRadius.circular(100),
-                    color:  _transitionPercent > 0.5&&selectedIndex+1==2 ?AppColors.primaryColor :Colors.transparent,
+                    borderRadius: BorderRadius.circular(100),
+                    color: _transitionPercent > 0.5 && selectedIndex + 1 == 2
+                        ? AppColors.primaryColor
+                        : Colors.transparent,
                   ),
                   alignment: Alignment.center,
-                  child:_transitionPercent > 0.5&&selectedIndex+1==2 ? ShowUpAnimation(
-                    delay: 1100,
-                      child: Text(AppStrings.letStart,style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: AppColors.backgroundColor),)):const SizedBox(),
+                  child: _transitionPercent > 0.5 && selectedIndex + 1 == 2
+                      ? ShowUpAnimation(
+                          delay: 1100,
+                          child: Text(
+                            AppStrings.letStart,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium
+                                ?.copyWith(color: AppColors.backgroundColor),
+                          ))
+                      : const SizedBox(),
                 ),
               ),
             )
@@ -143,6 +147,4 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
       ),
     ));
   }
-
-
 }
