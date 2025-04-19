@@ -17,5 +17,7 @@ A new Flutter project.
 ### utils      -> for utils 
  
 ### providers  -> for stateManagement
+
+ happy coding 😁 
  
 
