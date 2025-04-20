@@ -18,6 +18,6 @@ A new Flutter project.
  
 ### providers  -> for stateManagement
 
- happy coding 😁 
+
  
 
