@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_nest/constants/app_strings.dart';
 
+import 'onBoardingScreen/on_boarding_screen.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -10,6 +12,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
   /// Here we are Creating a Key variable to access the animated List
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   ///  Here we are creating a list variable to hold all letters of our App Name
@@ -22,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
     /// Here we are calling a loadItems Function to perform animation
     _loadItems();// Start loading items automatically
     /// Here we are calling the splash Screen Logic function
-
+    _splashScreenLogic();
   }
   /// *** Load Items Functions *** ///
   void _loadItems() async {
@@ -46,31 +49,44 @@ class _SplashScreenState extends State<SplashScreen> {
     _listKey.currentState?.insertItem(index);
   }
 
+  /// *** Splash Screen Function *** ///
+  void _splashScreenLogic() async {
 
+    /// Here we are simple waiting for 3.5 seconds and performing navigation
+    Future.delayed(const Duration(milliseconds: 3500), (){
+      /// Navigating with pushReplacement
+     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>OnBoardingScreen()));
+
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+
       /// **** Animated List for Animating the app Name **** ///
       body: Stack(
           alignment: Alignment.center,
           children: [Center(
-            child: SizedBox(
-              height: 100,
-              child: AnimatedList(
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.all(20),
-                  key: _listKey,
-                  initialItemCount: _data.length,
-                  itemBuilder: (context, index, animation) {
-                    return RotationTransition(
-                      turns: animation,
-                      child: Text(
-                        _data[index], style: GoogleFonts.oleoScript(textStyle: Theme.of(context).textTheme.displayLarge,fontWeight: FontWeight.bold,color: Theme.of(context).primaryColor)
-                      ),
-                    );
-                  }),
+            child: Transform.scale(
+              scale:1,
+              child: SizedBox(
+                height: 100,
+                child: AnimatedList(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.all(20),
+                    key: _listKey,
+                    initialItemCount: _data.length,
+                    itemBuilder: (context, index, animation) {
+                      return RotationTransition(
+                        turns: animation,
+                        child: Text(
+                          _data[index], style: GoogleFonts.oleoScript(textStyle: Theme.of(context).textTheme.displayLarge,fontWeight: FontWeight.bold,color: Theme.of(context).primaryColor)
+                        ),
+                      );
+                    }),
+              ),
             ),
           ),
             Positioned(bottom: 20,
