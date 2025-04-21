@@ -3,6 +3,8 @@ import 'package:task_nest/constants/app_colors.dart';
 import 'package:task_nest/utils/show_animation_util.dart';
 import '../../constants/app_strings.dart';
 import '../../model/onboarding_model.dart';
+import '../../utils/page_transition_utils.dart' show MyCustomAnimatedRoute;
+import '../home_screen.dart';
 import 'circle_transition_painter.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -110,6 +112,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                   if (_transitionPercent > 0.5 && selectedIndex + 1 == 2) {
                     // Todo : Need to Add Navigation
                     // Obtain shared preferences.
+                    Navigator.of(context).push(MyCustomAnimatedRoute(enterWidget: const HomeScreen(),));
                   } else {
                     animationController.forward();
                   }
