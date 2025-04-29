@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_nest/constants/app_colors.dart';
+import 'package:task_nest/utils/animated_screen_curve.dart';
 import 'package:task_nest/utils/show_animation_util.dart';
 import '../../constants/app_strings.dart';
 import '../../model/onboarding_model.dart';
@@ -19,6 +20,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
   late AnimationController animationController;
   double _transitionPercent = 0;
   int selectedIndex = 0;
+  bool startTransition = false;
 
   @override
   void initState() {
@@ -112,36 +114,55 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                   if (_transitionPercent > 0.5 && selectedIndex + 1 == 2) {
                     // Todo : Need to Add Navigation
                     // Obtain shared preferences.
-                    Navigator.of(context).push(MyCustomAnimatedRoute(enterWidget: const HomeScreen(),));
+                    setState(() {
+                      startTransition = true;
+                      Future.delayed(const Duration(milliseconds: 500), () {
+                        Navigator.of(context).push(MyCustomAnimatedRoute(
+                          enterWidget:
+                              const AnimatedScreenCurve(child: HomeScreen()),
+                        ));
+                      });
+                    });
                   } else {
                     animationController.forward();
                   }
                 },
-                child: AnimatedContainer(
-                  height: 72,
-                  width: _transitionPercent > 0.5 && selectedIndex + 1 == 2
-                      ? 250
-                      : 72,
-                  duration: const Duration(milliseconds: 1800),
-                  curve: Curves.elasticInOut,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: _transitionPercent > 0.5 && selectedIndex + 1 == 2
-                        ? AppColors.primaryColor
-                        : Colors.transparent,
-                  ),
+                child: Stack(
                   alignment: Alignment.center,
-                  child: _transitionPercent > 0.5 && selectedIndex + 1 == 2
-                      ? ShowUpAnimation(
-                          delay: 1100,
-                          child: Text(
-                            AppStrings.letStart,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineMedium
-                                ?.copyWith(color: AppColors.backgroundColor),
-                          ))
-                      : const SizedBox(),
+                  children: [
+                    AnimatedContainer(
+                      height:startTransition?60: 72,
+                      width: _transitionPercent > 0.5 && selectedIndex + 1 == 2
+                          ?startTransition? 60:250
+                          : 72,
+                      duration: Duration(milliseconds: startTransition ?1200:1800),
+                      curve: Curves.elasticInOut,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color:
+                            _transitionPercent > 0.5 && selectedIndex + 1 == 2
+                                ? AppColors.primaryColor
+                                : Colors.transparent,
+                      ),
+                      alignment: Alignment.center,
+                    ),
+                    _transitionPercent > 0.5 && selectedIndex + 1 == 2
+                        ? AnimatedPositioned(
+                            bottom: startTransition ? 100 : 18,
+                            duration: const Duration(milliseconds: 300),
+                            child: ShowUpAnimation(
+                                delay: 1100,
+                                child: Text(
+                                  AppStrings.letStart,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium
+                                      ?.copyWith(
+                                          color: AppColors.backgroundColor),
+                                )),
+                          )
+                        : const SizedBox(),
+                  ],
                 ),
               ),
             )

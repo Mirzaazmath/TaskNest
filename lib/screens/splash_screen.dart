@@ -82,7 +82,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       return RotationTransition(
                         turns: animation,
                         child: Text(
-                          _data[index], style: GoogleFonts.oleoScript(textStyle: Theme.of(context).textTheme.displayLarge,fontWeight: FontWeight.bold,color: Theme.of(context).primaryColor)
+                          _data[index], style: GoogleFonts.fascinate(textStyle: Theme.of(context).textTheme.displayLarge,fontWeight: FontWeight.bold,color: Theme.of(context).primaryColor)
                         ),
                       );
                     }),
