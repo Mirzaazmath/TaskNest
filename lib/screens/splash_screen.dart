@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
     for (int i = 0; i < appName.length; i++) {
       /// Here we are delaying some time in every loop to handle animation
       await Future.delayed(
-          const  Duration(milliseconds: 200)); // Simulate a delay
+          const  Duration(milliseconds: 300)); // Simulate a delay
       /// Here we are calling the _addItem function after delay in every loop
       _addItem();
     }
@@ -53,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void _splashScreenLogic() async {
 
     /// Here we are simple waiting for 3.5 seconds and performing navigation
-    Future.delayed(const Duration(milliseconds: 3500), (){
+    Future.delayed(const Duration(milliseconds: 4000), (){
       /// Navigating with pushReplacement
      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>OnBoardingScreen()));
 
@@ -82,8 +82,8 @@ class _SplashScreenState extends State<SplashScreen> {
                       return RotationTransition(
                         turns: animation,
                         child: Text(
-                          _data[index], style: GoogleFonts.fascinate(textStyle: Theme.of(context).textTheme.displayLarge,fontWeight: FontWeight.bold,color: Theme.of(context).primaryColor)
-                        ),
+                          _data[index], style: Theme.of(context).textTheme.displayLarge?.copyWith(fontWeight: FontWeight.bold,color: Theme.of(context).primaryColor),)
+
                       );
                     }),
               ),
